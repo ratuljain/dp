@@ -1,6 +1,7 @@
 __author__ = 'lol'
-class UnionFind:
 
+
+class UnionFind:
     def __init__(self, n):
         self.parent = list(range(n))
         self.rank = [0 for x in range(n)]
@@ -24,11 +25,10 @@ class UnionFind:
                 self.rank[yRoot] += 1
 
     def printParent(self):
-        print("index: ",list(range(3)))
+        print("index: ", list(range(3)))
         print("parent: ", self.parent)
 
 class Graph(object):
-
     def __init__(self, graph_dict={}):
         """ initializes a graph object """
         self.__graph_dict = graph_dict
@@ -86,14 +86,12 @@ class Graph(object):
         return res
 
 
-
-
-graph4 = { 0 : [1],
-                  1 : [0, 2, 3, 5],    # edit: corrected from [0, 2] to [0, 2, 3, 5]
-                  2 : [1],
-                  3 : [1, 4],
-                  4 : [3, 5],
-                  5 : [1, 4] }
+graph4 = {0: [1],
+          1: [0, 2, 3, 5],
+          2: [1],
+          3: [1, 4],
+          4: [3, 5],
+          5: [1, 4]}
 
 g = Graph(graph4)
 edges = g.edges()
@@ -118,11 +116,3 @@ for edge in edges:
 # print("\nDisjoint sets: ")
 # for mySet in myDict.values():
 #     print(mySet)
-
-
-
-
-
-
-
-
