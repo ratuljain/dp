@@ -28,6 +28,7 @@ class UnionFind:
         print("index: ", list(range(3)))
         print("parent: ", self.parent)
 
+
 class Graph(object):
     def __init__(self, graph_dict={}):
         """ initializes a graph object """
