@@ -1,14 +1,14 @@
-__author__ = 'lol'
-N = 4
-coins = [1,2,3]
+# Enter your code here. Read input from STDIN. Print output to STDOUT
 
-def change(N, coins):
-    if N == 0:
-        return 1
-    if N < 0:
-        return 0
-    if len(coins) == 0 and N > 0:
-        return 0
-    return change(N, coins[:-1]) + change(N-coins[-1], coins)
+ladders = []
+snakes = []
+# testcases = raw_input()
+l = int(raw_input())
+for i in range(l):
+    ladders.append(tuple([int(i) for i in raw_input().split(" ")]))
+print ladders
+s = int(raw_input())
+for i in range(s):
+    snakes.append(tuple([int(i) for i in raw_input().split(" ")]))
 
-print change(N, coins)
+print snakes

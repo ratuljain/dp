@@ -77,3 +77,17 @@ print dfs(g, 'A')
 #
 #
 # # print [i for i in paths(g, 'A', 'H')]
+def shortDist(graph, start, goal):
+    visited = []
+    queue = deque([(start, 0)])
+
+    while queue:
+        node, dist = queue.popleft()
+        if node == goal:
+            return dist
+        visited.append(node)
+        for vertex in [i for i in graph[node] if i not in visited]:
+            queue.append((vertex, dist + 1))
+    return None
+
+print shortDist(g, 'A', 'H')
