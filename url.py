@@ -142,41 +142,37 @@ def doStuff(url):
         redirect(a)
     conn.close()
 
-try:
-    conn = sqlite3.connect('example.db')
-    c = conn.cursor()
 
-    sql = '''CREATE TABLE IF NOT EXISTS urls (
-            id integer primary key autoincrement,
-            url string not null unique,
-            short string,
-            hits int,
-            t TIMESTAMP
-            DEFAULT CURRENT_TIMESTAMP
-            ); '''
+conn = sqlite3.connect('example.db')
+c = conn.cursor()
 
-    c.execute(sql)
+sql = '''CREATE TABLE IF NOT EXISTS urls (
+        id integer primary key autoincrement,
+        url string not null unique,
+        short string,
+        hits int,
+        t TIMESTAMP
+        DEFAULT CURRENT_TIMESTAMP
+        ); '''
 
+c.execute(sql)
 
 ######################################################################  test
 
-    insertURL("samsung.com")
+insertURL("samsung.com")
 
-    doStuff("python.org")
-    doStuff("https://en.wikipedia.org/wiki/Python_(programming_language)")
+doStuff("python.org")
+doStuff("https://en.wikipedia.org/wiki/Python_(programming_language)")
 
-    apple = shortURL("apple.com")
-    print apple
-    redirect(apple)
+apple = shortURL("apple.com")
+print apple
+redirect(apple)
 
-    hits("http://python.org")
+hits("http://python.org")
 
-    search("python")
-    # c.execute('''SELECT * FROM urls''')
-    # print c.fetchall()
+search("python")
+# c.execute('''SELECT * FROM urls''')
+# print c.fetchall()
 
-except:
-    pass
 
-finally:
-    c.close()
+c.close()
