@@ -6,11 +6,12 @@ import datetime
 import webbrowser
 from BeautifulSoup import BeautifulSoup
 import urllib2
+
 counter = 4
 
 
 # Converts the string into base62
-def toBase62(num, b = 62):
+def toBase62(num, b=62):
     if b <= 0 or b > 62:
         return 0
     base = string.digits + string.lowercase + string.uppercase
@@ -23,8 +24,9 @@ def toBase62(num, b = 62):
         res = base[int(r)] + res
     return res
 
+
 # Converts back to base 10
-def toBase10(num, b = 62):
+def toBase10(num, b=62):
     base = string.digits + string.lowercase + string.uppercase
     limit = len(num)
     res = 0
@@ -42,13 +44,15 @@ def getTitle(url):
     except:
         return "Site unavailable"
 
+
 # Processes the URL so that amazon.com and http://amazon.com are the same
 # and only a single entry is made for both of them
 
 def processURL(url):
     if urlparse(url).scheme == '':
-            url = 'http://' + url
+        url = 'http://' + url
     return url
+
 
 # Inserts the url and it's resulting shortened URL into the table
 def insertURL(url):
@@ -58,13 +62,14 @@ def insertURL(url):
     sort_str = x.fetchall()[0][0]
     sort = int(sort_str) + 1
     now = datetime.datetime.now()
-    short = "http://short.nr/"+toBase62(sort)
+    short = "http://short.nr/" + toBase62(sort)
     try:
-        c.execute('insert into urls (url, short, hits, t) values (?, ?, ?, ?) ', [processURL(url), short,0 ,now])
+        c.execute('insert into urls (url, short, hits, t) values (?, ?, ?, ?) ', [processURL(url), short, 0, now])
     except:
         pass
     conn.commit()
     conn.close()
+
 
 # Inserts URL into the database and returns the resulting shortened version
 # Uses the insertURL() method from above. http://short.nr/ is the domain of shortening website.
@@ -74,13 +79,14 @@ def shortURL(url):
     conn = sqlite3.connect('example.db')
     c = conn.cursor()
     c.execute("SELECT id FROM urls WHERE url = ?", (processURL(url),))
-    data=c.fetchall()
+    data = c.fetchall()
     if not data:
         insertURL(url)
     c.execute("SELECT id FROM urls WHERE url = ?", (processURL(url),))
-    data=c.fetchall()[0][0]
+    data = c.fetchall()[0][0]
     conn.close()
     return "http://short.nr/" + str(data)
+
 
 # Converts the shortened URL back to the orignal one and
 # redirects to the orignal URL
@@ -95,6 +101,7 @@ def redirect(url):
     webbrowser.open(orignalUrl)
     conn.close()
 
+
 # Number of times site it visited
 
 def hits(url):
@@ -104,12 +111,13 @@ def hits(url):
     c.execute("SELECT hits FROM urls WHERE url = ?", (url,))
     print "Hits for " + url + " is " + str(c.fetchall()[0][0])
 
+
 # returns list of url matching a given string
 
 def search(searchStr):
     conn = sqlite3.connect('example.db')
     c = conn.cursor()
-    c.execute("select url from urls where url like ? ", ('%'+searchStr+'%',))
+    c.execute("select url from urls where url like ? ", ('%' + searchStr + '%',))
     res = c.fetchall()
     for i in res:
         print i[0] + " title -> " + getTitle(i[0])
@@ -127,7 +135,7 @@ def doStuff(url):
     print "Here's your shortened URL  " + a + " for the url " + url
     print ""
     print "Do you want to visit the shortened url? (y/n)"
-    if(raw_input() == 'y'):
+    if (raw_input() == 'y'):
         redirect(a)
     conn.close()
 
