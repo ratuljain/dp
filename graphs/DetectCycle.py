@@ -74,9 +74,10 @@ def cycle_exists(graph):
 # print("\nAlgorithm passed all test cases")
 
 
-graph3 = { 0 : [1, 2],
-           1 : [0],
-           2 : [0] }
-
+graph3 = { 1 : [2, 3],
+           2 : [4],
+           3 : [4],
+           4 : [] }
+print cycle_exists(graph3)
 assert(cycle_exists(graph3) == False)
 print("Graph3 has no cycle.")
