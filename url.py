@@ -7,10 +7,9 @@ import webbrowser
 from BeautifulSoup import BeautifulSoup
 import urllib2
 
-counter = 4
-
 
 # Converts the string into base62
+
 def toBase62(num, b=62):
     if b <= 0 or b > 62:
         return 0
@@ -26,6 +25,7 @@ def toBase62(num, b=62):
 
 
 # Converts back to base 10
+
 def toBase10(num, b=62):
     base = string.digits + string.lowercase + string.uppercase
     limit = len(num)
@@ -55,6 +55,7 @@ def processURL(url):
 
 
 # Inserts the url and it's resulting shortened URL into the table
+
 def insertURL(url):
     conn = sqlite3.connect('example.db')
     c = conn.cursor()
@@ -102,7 +103,7 @@ def redirect(url):
     conn.close()
 
 
-# Number of times site it visited
+# Number of times site is visited
 
 def hits(url):
     url = processURL(url)
@@ -110,6 +111,7 @@ def hits(url):
     c = conn.cursor()
     c.execute("SELECT hits FROM urls WHERE url = ?", (url,))
     print "Hits for " + url + " is " + str(c.fetchall()[0][0])
+    conn.close()
 
 
 # returns list of url matching a given string
@@ -121,6 +123,7 @@ def search(searchStr):
     res = c.fetchall()
     for i in res:
         print i[0] + " title -> " + getTitle(i[0])
+    conn.close()
 
 
 # inserts URL, shortens it then converts it back to the
@@ -155,7 +158,8 @@ sql = '''CREATE TABLE IF NOT EXISTS urls (
 c.execute(sql)
 
 
-#####################################  test
+######################################################################  test
+
 insertURL("samsung.com")
 
 doStuff("python.org")
